@@ -64,9 +64,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Drivers\DriverInstance.cs" />
     <Compile Include="Pages\MainPage.cs" />
+    <Compile Include="Pages\ResultPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\Tests.cs" />
   </ItemGroup>

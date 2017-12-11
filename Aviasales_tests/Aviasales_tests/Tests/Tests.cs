@@ -66,5 +66,22 @@ namespace Aviasales_tests.Tests
 
         }
 
+        [Fact]
+        public void FindFlightRoundtripAdultsFilter()
+        {
+            var driver = DriverInstance.GetInstance();
+            ResultPage page = new ResultPage(driver);
+            page.OpenPage();
+            page.FilterWithoutTransfers();
+        }
+
+        [Fact]
+        public void FindFlightRoundtripAdultsFilterBagage()
+        {
+            var driver = DriverInstance.GetInstance();
+            ResultPage page = new ResultPage(driver);
+            page.OpenPage();
+            page.FilterBagage();
+        }
     }
 }
