@@ -1,6 +1,7 @@
 ﻿using Aviasales_tests.Drivers;
 using Aviasales_tests.Pages;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,57 +15,91 @@ namespace Aviasales_tests.Tests
     {
         [Fact]
         public void FindFlightRoundtripTwoAdults() {
-            var driver = DriverInstance.GetInstance();
-            MainPage page = new MainPage(driver);
-            page.OpenPage();
-            page.FindFlightRoundtripAdultsOnly("Вильнюс", "Амстердам", new DateTime(2018,4,28), new DateTime(2018, 5, 1), 2);
+            Aviasales_tests.Steps.Steps steps = new Steps.Steps();
+            steps.InitBrowser();
+            steps.FindFlightRoundtripTwoAdults("Вильнюс", "Амстердам", new DateTime(2018, 4, 28), new DateTime(2018, 5, 1), 2);
+            Assert.True(steps.HasTicketsList(true));
         }
 
         [Fact]
         public void FindFlightWithSameOriginAndDestinationPointThrowException()
         {
-            var driver = DriverInstance.GetInstance();
-            MainPage page = new MainPage(driver);
-            page.OpenPage();
-            page.FindFlightRoundtripAdultsOnly("Вильнюс", "Вильнюс", new DateTime(2018, 4, 28), new DateTime(2018, 5, 1), 2);
+            Aviasales_tests.Steps.Steps steps = new Steps.Steps();
+            steps.InitBrowser();
+            steps.FindFlightWithSameOriginAndDestinationPointThrowException("Вильнюс", "Вильнюс", new DateTime(2018, 4, 28), new DateTime(2018, 5, 1), 2);
+            Assert.True(steps.HasErrorMessage());
         }
 
         [Fact]
         public void FindFlightOneAdult()
         {
-            var driver = DriverInstance.GetInstance();
-            MainPage page = new MainPage(driver);
-            page.OpenPage();
-            page.FindFlightAdultsOnly("Вильнюс", "Амстердам", new DateTime(2018, 4, 28), 1);
+            Aviasales_tests.Steps.Steps steps = new Steps.Steps();
+            steps.InitBrowser();
+            steps.FindFlightOneAdult("Вильнюс", "Амстердам", new DateTime(2018, 4, 28), 1);
+            Assert.True(steps.HasTicketsList(true));
         }
 
         [Fact]
         public void FindFlightRoundtripWithChildrenUnder12()
         {
-            var driver = DriverInstance.GetInstance();
-            MainPage page = new MainPage(driver);
-            page.OpenPage();
-            page.FindFlightWithOneChildrenUnder12("Вильнюс", "Амстердам", new DateTime(2018, 4, 28), new DateTime(2018, 5, 1), 1, 1);
+            Aviasales_tests.Steps.Steps steps = new Steps.Steps();
+            steps.InitBrowser();
+            steps.FindFlightRoundtripWithChildrenUnder12("Вильнюс", "Амстердам", new DateTime(2018, 4, 28), new DateTime(2018, 5, 1), 1, 1);
+            Assert.True(steps.HasTicketsList(true));
         }
 
         [Fact]
         public void FindFlightRoundtripWithChildernUnder2()
         {
-            var driver = DriverInstance.GetInstance();
-            MainPage page = new MainPage(driver);
-            page.OpenPage();
-            page.FindFlightWithOneChildrenUnder2("Вильнюс", "Амстердам", new DateTime(2018, 4, 28), new DateTime(2018, 5, 1), 1, 1);
+            Aviasales_tests.Steps.Steps steps = new Steps.Steps();
+            steps.InitBrowser();
+            steps.FindFlightRoundtripWithChildernUnder2("Вильнюс", "Амстердам", new DateTime(2018, 4, 28), new DateTime(2018, 5, 1), 1, 1);
+            Assert.True(steps.HasTicketsList(true));
         }
 
         [Fact]
         public void FindFlightRoundtripAdultsBusinessClass()
         {
-            var driver = DriverInstance.GetInstance();
-            MainPage page = new MainPage(driver);
-            page.OpenPage();
-            page.FindFlightRoundtripAdultsOnlyBusinessClass("Вильнюс", "Амстердам", new DateTime(2018, 4, 28), new DateTime(2018, 5, 1), 1);
-
+            Aviasales_tests.Steps.Steps steps = new Steps.Steps();
+            steps.InitBrowser();
+            steps.FindFlightRoundtripAdultsBusinessClass("Вильнюс", "Амстердам", new DateTime(2018, 4, 28), new DateTime(2018, 5, 1), 1);
+            Assert.True(steps.HasTicketsList(true));
         }
 
+        [Fact]
+        public void FindFlightRoundtripAdultsFilter()
+        {
+            Aviasales_tests.Steps.Steps steps = new Steps.Steps();
+            steps.InitBrowser();
+            steps.FindFlightRoundtripAdultsFilter();
+            Assert.True(steps.HasTicketsList(false));
+        }
+
+        [Fact]
+        public void FindFlightRoundtripAdultsFilterBagage()
+        {
+            Aviasales_tests.Steps.Steps steps = new Steps.Steps();
+            steps.InitBrowser();
+            steps.FindFlightRoundtripAdultsFilterBagage();
+            Assert.True(steps.HasTicketsList(false));
+        }
+
+        [Fact]
+        public void FindFlightRoundtripAdultsFilterAirline()
+        {
+            Aviasales_tests.Steps.Steps steps = new Steps.Steps();
+            steps.InitBrowser();
+            steps.FindFlightRoundtripAdultsFilterAirline();
+            Assert.True(steps.HasTicketsList(false));
+        }
+
+        [Fact]
+        public void FindFlightRoundtripAdultsMultiWay()
+        {
+            Aviasales_tests.Steps.Steps steps = new Steps.Steps();
+            steps.InitBrowser();
+            steps.FindFlightRoundtripAdultsMultiWay(new string[] { "Вильнюс", "Берлин", "Амстердам" }, new string[] { "Берлин", "Амстердам", "Вильнюс" }, new DateTime[] { new DateTime(2018, 4, 28), new DateTime(2018, 4, 29), new DateTime(2018, 5, 1) });
+            Assert.True(steps.HasTicketsList(false));
+        }
     }
 }

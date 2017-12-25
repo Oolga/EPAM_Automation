@@ -57,13 +57,21 @@ namespace Aviasales_tests.Pages
             SetDepartDate(DateTime.Now, departDate);
 
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-            SetReturnDate(departDate, returnDate);
-
+            SetDepartDate(departDate, returnDate);
 
             SetCountOfAdults(countOfAdults);
 
-
             buttonFind.Click();
+        }
+
+        public By GetTicketsListContainer()
+        {
+            return By.XPath("/html/body/div[1]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[2]");
+        }
+
+        public IEnumerable<IWebElement> GetTicketsListElement(IWebElement dynamicElement)
+        {
+            return dynamicElement.FindElements(By.XPath("//div[@class='ticket product-list__ticket --openable']"));
         }
 
         public void FindFlightRoundtripAdultsOnlyBusinessClass(string origin, string destination, DateTime departDate, DateTime returnDate, int countOfAdults)
@@ -75,7 +83,7 @@ namespace Aviasales_tests.Pages
             SetDepartDate(DateTime.Now, departDate);
 
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-            SetReturnDate(departDate, returnDate);
+            SetDepartDate(departDate, returnDate);
 
 
             SetCountOfAdults(countOfAdults);
@@ -84,7 +92,6 @@ namespace Aviasales_tests.Pages
 
             buttonFind.Click();
         }
-
 
         public void FindFlightAdultsOnly(string origin, string destination, DateTime departDate, int countOfAdults)
         {
@@ -99,6 +106,22 @@ namespace Aviasales_tests.Pages
             buttonFind.Click();
         }
 
+        public void FindFlightMultiWay(string[] origin, string[]destination, DateTime[] departDate)
+        {
+            driver.FindElement(By.XPath("/html/body/div[1]/div[2]/div/div/form/div[2]/a")).Click();
+            for (int i = 0; i < origin.Count(); i++)
+            {
+                driver.FindElement(By.XPath("//input[@id='segments[" + i + "][origin]']")).SendKeys(origin[i]);
+                driver.FindElement(By.XPath("//input[@id='segments[" + i + "][destination]']")).SendKeys(destination[i]);
+                driver.FindElement(By.XPath("//input[@id='segments[" + i + "][depart_date]']")).Click();
+                var before = i == 0 ? DateTime.Now : departDate[i - 1];
+                SetDepartDate(before, departDate[i]);
+                if(i!=origin.Count()-1)
+                    driver.FindElement(By.XPath("/html/body/div[1]/div[2]/div/div/form/div[2]/a")).Click();
+            }
+
+            buttonFind.Click();
+        }
 
         public void FindFlightWithOneChildrenUnder12(string origin, string destination, DateTime departDate, DateTime returnDate, int countOfAdults, int countOfChildren)
         {
@@ -109,7 +132,7 @@ namespace Aviasales_tests.Pages
             SetDepartDate(DateTime.Now, departDate);
 
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-            SetReturnDate(departDate, returnDate);
+            SetDepartDate(departDate, returnDate);
 
             SetCountOfAdults(countOfAdults);
             SetCountOfCheldrenUnder12(countOfChildren);
@@ -126,7 +149,7 @@ namespace Aviasales_tests.Pages
             SetDepartDate(DateTime.Now, departDate);
 
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-            SetReturnDate(departDate, returnDate);
+            SetDepartDate(departDate, returnDate);
 
             SetCountOfAdults(countOfAdults);
             SetCountOfCheldrenUnder2(countOfChildren);
@@ -135,29 +158,20 @@ namespace Aviasales_tests.Pages
         }
 
 
-        public void HasErrorMessage() {
-            driver.FindElement(By.XPath("//div[@class='of_form_part--destination is_invalid of_form_part of_autocomplete']"));
+        public bool HasErrorMessage() {
+           return null!= driver.FindElement(By.XPath("//div[@class='of_form_part--destination is_invalid of_form_part of_autocomplete']"));
         }
 
         private void SetDepartDate(DateTime before, DateTime date)
         {
-            int count = 12 - before.Month + date.Month;
+            int count = before.Year < date.Year ? Math.Abs( 12 - (before.Month + date.Month) ): date.Month - before.Month;
             SetDate(count, date);
-        }
-
-        private void SetReturnDate(DateTime before, DateTime date)
-        {
-            int count = date.Month- before.Month;
-            SetDate(count, date);
-            //return count;
         }
 
         private void SetDate(int count, DateTime date)
         {
-
-
             for (int i = 0; i < count; i++) {
-                driver.FindElement(By.XPath("//button[@class='pika-next']")).Click(); //click next month
+                driver.FindElement(By.XPath("//button[@class='pika-next']")).Click(); 
             }
 
             driver.FindElement(By.XPath("//button[@data-pika-day='" + date.Day + "']")).Click();
