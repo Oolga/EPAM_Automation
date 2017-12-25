@@ -26,14 +26,14 @@ namespace Aviasales_tests.Steps
         public void FindFlightRoundtripTwoAdults(string origin, string destination, DateTime departDate, DateTime returnDate, int countOfAdults)
         {
             page.OpenPage();
-            page.FindFlightRoundtripAdultsOnly( origin,  destination,  departDate,  returnDate, countOfAdults);
+            page.FindFlightRoundtripAdultsOnly(origin, destination, departDate, returnDate, countOfAdults);
         }
 
         public bool HasTicketsList(bool isMainPage)
         {
             foreach (var windowHandle in driver.WindowHandles)
             {
-                if(isMainPage)
+                if (isMainPage)
                 {
                     if (windowHandle != driver.CurrentWindowHandle)
                     {

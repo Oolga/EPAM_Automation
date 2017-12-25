@@ -13,18 +13,23 @@ namespace Aviasales_tests.Pages
     {
         private const string BASE_URL = "https://www.aviasales.ru";
 
-		private string incButtonPath = "//a[@class='of_numeric_input__inc']";
-
         [FindsBy(How = How.XPath, Using = "//button[@class='of_main_form__submit']")]
         private IWebElement buttonFind;
-		[FindsBy(How = How.XPath, Using = "//button[@class='pika-next']")]
-		private IWebElement nextMonthButton;
-		[FindsBy(How = How.XPath, Using = "//input[@id='origin']")]
+        [FindsBy(How = How.XPath, Using = "/html/body/div[1]/div[2]/div/div[1]/div[2]/div/form/div[1]/div[3]/div[1]/div")]
+        private IWebElement dropDownElement;
+
+        [FindsBy(How = How.XPath, Using = "//input[@id='origin']")]
         private IWebElement originInput;
         [FindsBy(How = How.XPath, Using = "//input[@id='destination']")]
         private IWebElement destinationInput;
+        [FindsBy(How = How.XPath, Using = "//input[@name='depart_date']")]
+        private IWebElement departDateInput;
+        [FindsBy(How = How.XPath, Using = "//input[@name='return_date']")]
+        private IWebElement returnDateInput;
         [FindsBy(How = How.XPath, Using = "//div[@class='of_dropdown__over']")]
         private IWebElement ofDropdownValueButton;
+        [FindsBy(How = How.XPath, Using = "//div[@class='of_additional__row'][0]/span[@class='of_numeric_input__value']")]
+        private IWebElement setCountOfAdultsInput;
         [FindsBy(How = How.XPath, Using = "//div[@class='of_input_checkbox of_input_checkbox--dark of_additional__trip_class']")]
         private IWebElement tripClassSwitcherButton;
 
@@ -46,7 +51,8 @@ namespace Aviasales_tests.Pages
             buttonFind.Click();
         }
 
-        public void FindFlightRoundtripAdultsOnly(string origin, string destination, DateTime departDate, DateTime returnDate, int countOfAdults) {
+        public void FindFlightRoundtripAdultsOnly(string origin, string destination, DateTime departDate, DateTime returnDate, int countOfAdults)
+        {
             originInput.SendKeys(origin);
             destinationInput.SendKeys(destination);
 
@@ -87,6 +93,8 @@ namespace Aviasales_tests.Pages
             ofDropdownValueButton.Click();
             tripClassSwitcherButton.Click();
 
+            ofDropdownValueButton.Click();
+
             buttonFind.Click();
         }
 
@@ -103,7 +111,7 @@ namespace Aviasales_tests.Pages
             buttonFind.Click();
         }
 
-        public void FindFlightMultiWay(string[] origin, string[]destination, DateTime[] departDate)
+        public void FindFlightMultiWay(string[] origin, string[] destination, DateTime[] departDate)
         {
             driver.FindElement(By.XPath("/html/body/div[1]/div[2]/div/div/form/div[2]/a")).Click();
             for (int i = 0; i < origin.Count(); i++)
@@ -113,7 +121,7 @@ namespace Aviasales_tests.Pages
                 driver.FindElement(By.XPath("//input[@id='segments[" + i + "][depart_date]']")).Click();
                 var before = i == 0 ? DateTime.Now : departDate[i - 1];
                 SetDepartDate(before, departDate[i]);
-                if(i!=origin.Count()-1)
+                if (i != origin.Count() - 1)
                     driver.FindElement(By.XPath("/html/body/div[1]/div[2]/div/div/form/div[2]/a")).Click();
             }
 
@@ -150,43 +158,40 @@ namespace Aviasales_tests.Pages
 
             SetCountOfAdults(countOfAdults);
             SetCountOfCheldrenUnder2(countOfChildren);
+            ofDropdownValueButton.Click();
 
             buttonFind.Click();
         }
 
-<<<<<<< HEAD
 
-        public bool HasErrorMessage() {
-           return null!= driver.FindElement(By.XPath("//div[@class='of_form_part--destination is_invalid of_form_part of_autocomplete']"));
+        public bool HasErrorMessage()
+        {
+            return null != driver.FindElement(By.XPath("//div[@class='of_form_part--destination is_invalid of_form_part of_autocomplete']"));
         }
 
-=======
->>>>>>> 5d1045e1627ebbe909b59f18a9b453c870adff13
         private void SetDepartDate(DateTime before, DateTime date)
         {
-            int count = before.Year < date.Year ? Math.Abs( 12 - (before.Month + date.Month) ): date.Month - before.Month;
+            int count = before.Year < date.Year ? Math.Abs(12 - (before.Month + date.Month)) : date.Month - before.Month;
             SetDate(count, date);
         }
 
         private void SetDate(int count, DateTime date)
         {
-            for (int i = 0; i < count; i++) {
-<<<<<<< HEAD
-                driver.FindElement(By.XPath("//button[@class='pika-next']")).Click(); 
-=======
-				nextMonthButton.Click();
->>>>>>> 5d1045e1627ebbe909b59f18a9b453c870adff13
+            for (int i = 0; i < count; i++)
+            {
+                driver.FindElement(By.XPath("//button[@class='pika-next']")).Click();
             }
 
             driver.FindElement(By.XPath("//button[@data-pika-day='" + date.Day + "']")).Click();
         }
 
-        private void SetCountOfAdults(int count) {
+        private void SetCountOfAdults(int count)
+        {
 
             for (int i = 1; i < count; i++)
             {
                 ofDropdownValueButton.Click();
-                driver.FindElements(By.XPath(incButtonPath))[0].Click();
+                driver.FindElements(By.XPath("//a[@class='of_numeric_input__inc']"))[0].Click();
             }
         }
 
@@ -195,7 +200,7 @@ namespace Aviasales_tests.Pages
             for (int i = 0; i < count; i++)
             {
                 ofDropdownValueButton.Click();
-                driver.FindElements(By.XPath(incButtonPath))[1].Click();
+                driver.FindElements(By.XPath("//a[@class='of_numeric_input__inc']"))[1].Click();
             }
         }
 
@@ -204,7 +209,7 @@ namespace Aviasales_tests.Pages
             for (int i = 0; i < count; i++)
             {
                 ofDropdownValueButton.Click();
-                driver.FindElements(By.XPath(incButtonPath))[2].Click();
+                driver.FindElements(By.XPath("//a[@class='of_numeric_input__inc']"))[2].Click();
             }
         }
 

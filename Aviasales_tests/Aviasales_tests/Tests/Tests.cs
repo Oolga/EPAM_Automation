@@ -14,7 +14,8 @@ namespace Aviasales_tests.Tests
     public class Tests
     {
         [Fact]
-        public void FindFlightRoundtripTwoAdults() {
+        public void FindFlightRoundtripTwoAdults()
+        {
             Aviasales_tests.Steps.Steps steps = new Steps.Steps();
             steps.InitBrowser();
             steps.FindFlightRoundtripTwoAdults("Вильнюс", "Амстердам", new DateTime(2018, 4, 28), new DateTime(2018, 5, 1), 2);
@@ -94,30 +95,12 @@ namespace Aviasales_tests.Tests
         }
 
         [Fact]
-<<<<<<< HEAD
         public void FindFlightRoundtripAdultsMultiWay()
         {
             Aviasales_tests.Steps.Steps steps = new Steps.Steps();
             steps.InitBrowser();
             steps.FindFlightRoundtripAdultsMultiWay(new string[] { "Вильнюс", "Берлин", "Амстердам" }, new string[] { "Берлин", "Амстердам", "Вильнюс" }, new DateTime[] { new DateTime(2018, 4, 28), new DateTime(2018, 4, 29), new DateTime(2018, 5, 1) });
             Assert.True(steps.HasTicketsList(false));
-=======
-        public void FindFlightRoundtripAdultsFilter()
-        {
-            var driver = DriverInstance.GetInstance();
-            ResultPage page = new ResultPage(driver);
-            page.OpenPage();
-            page.FilterWithoutTransfers();
-        }
-
-        [Fact]
-        public void FindFlightRoundtripAdultsFilterBagage()
-        {
-            var driver = DriverInstance.GetInstance();
-            ResultPage page = new ResultPage(driver);
-            page.OpenPage();
-            page.FilterBagage();
->>>>>>> 5d1045e1627ebbe909b59f18a9b453c870adff13
         }
     }
 }
