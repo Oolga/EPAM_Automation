@@ -13,21 +13,18 @@ namespace Aviasales_tests.Pages
     {
         private const string BASE_URL = "https://www.aviasales.ru";
 
+		private string incButtonPath = "//a[@class='of_numeric_input__inc']";
+
         [FindsBy(How = How.XPath, Using = "//button[@class='of_main_form__submit']")]
         private IWebElement buttonFind;
-
-        [FindsBy(How = How.XPath, Using = "//input[@id='origin']")]
+		[FindsBy(How = How.XPath, Using = "//button[@class='pika-next']")]
+		private IWebElement nextMonthButton;
+		[FindsBy(How = How.XPath, Using = "//input[@id='origin']")]
         private IWebElement originInput;
         [FindsBy(How = How.XPath, Using = "//input[@id='destination']")]
         private IWebElement destinationInput;
-        [FindsBy(How = How.XPath, Using = "//input[@name='depart_date']")]
-        private IWebElement departDateInput;
-        [FindsBy(How = How.XPath, Using = "//input[@name='return_date']")]
-        private IWebElement returnDateInput;
         [FindsBy(How = How.XPath, Using = "//div[@class='of_dropdown__over']")]
         private IWebElement ofDropdownValueButton;
-        [FindsBy(How = How.XPath, Using = "//div[@class='of_additional__row'][0]/span[@class='of_numeric_input__value']")]
-        private IWebElement setCountOfAdultsInput;
         [FindsBy(How = How.XPath, Using = "//div[@class='of_input_checkbox of_input_checkbox--dark of_additional__trip_class']")]
         private IWebElement tripClassSwitcherButton;
 
@@ -157,11 +154,14 @@ namespace Aviasales_tests.Pages
             buttonFind.Click();
         }
 
+<<<<<<< HEAD
 
         public bool HasErrorMessage() {
            return null!= driver.FindElement(By.XPath("//div[@class='of_form_part--destination is_invalid of_form_part of_autocomplete']"));
         }
 
+=======
+>>>>>>> 5d1045e1627ebbe909b59f18a9b453c870adff13
         private void SetDepartDate(DateTime before, DateTime date)
         {
             int count = before.Year < date.Year ? Math.Abs( 12 - (before.Month + date.Month) ): date.Month - before.Month;
@@ -171,7 +171,11 @@ namespace Aviasales_tests.Pages
         private void SetDate(int count, DateTime date)
         {
             for (int i = 0; i < count; i++) {
+<<<<<<< HEAD
                 driver.FindElement(By.XPath("//button[@class='pika-next']")).Click(); 
+=======
+				nextMonthButton.Click();
+>>>>>>> 5d1045e1627ebbe909b59f18a9b453c870adff13
             }
 
             driver.FindElement(By.XPath("//button[@data-pika-day='" + date.Day + "']")).Click();
@@ -182,7 +186,7 @@ namespace Aviasales_tests.Pages
             for (int i = 1; i < count; i++)
             {
                 ofDropdownValueButton.Click();
-                driver.FindElements(By.XPath("//a[@class='of_numeric_input__inc']"))[0].Click();
+                driver.FindElements(By.XPath(incButtonPath))[0].Click();
             }
         }
 
@@ -191,7 +195,7 @@ namespace Aviasales_tests.Pages
             for (int i = 0; i < count; i++)
             {
                 ofDropdownValueButton.Click();
-                driver.FindElements(By.XPath("//a[@class='of_numeric_input__inc']"))[1].Click();
+                driver.FindElements(By.XPath(incButtonPath))[1].Click();
             }
         }
 
@@ -200,7 +204,7 @@ namespace Aviasales_tests.Pages
             for (int i = 0; i < count; i++)
             {
                 ofDropdownValueButton.Click();
-                driver.FindElements(By.XPath("//a[@class='of_numeric_input__inc']"))[2].Click();
+                driver.FindElements(By.XPath(incButtonPath))[2].Click();
             }
         }
 

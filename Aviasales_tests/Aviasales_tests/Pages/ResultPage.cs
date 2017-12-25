@@ -39,6 +39,7 @@ namespace Aviasales_tests.Pages
             driver.FindElements(By.XPath("//div[@class='checkboxes-list__list --overflow-hidden']/div[@class='checkboxes-list__item']"))[0].Click();
         }
 
+<<<<<<< HEAD
         public void FilterAirline()
         {
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
@@ -46,5 +47,7 @@ namespace Aviasales_tests.Pages
             driver.FindElement(By.XPath("/html/body/div[1]/div[2]/div/div/div[2]/div[2]/div[1]/div[2]/div[6]/div/div[3]/div[1]")).Click();
             driver.FindElement(By.XPath("/html/body/div[1]/div[2]/div/div/div[2]/div[2]/div[1]/div[2]/div[6]/div/div[3]/div[2]/div[24]")).Click();
         }
+=======
+>>>>>>> 5d1045e1627ebbe909b59f18a9b453c870adff13
     }
 }
