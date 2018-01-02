@@ -13,12 +13,17 @@ namespace Aviasales_tests.Tests
 {
     public class Tests
     {
+        private const string depPoint = "Вильнюс";
+        private const string returnPoint = "Амстердам";
+        private static DateTime depDate = new DateTime(DateTime.Now.Year, 4, 28);
+        private static DateTime returnDate = depDate.AddDays(4);
+
         [Fact]
         public void FindFlightRoundtripTwoAdults()
         {
             Aviasales_tests.Steps.Steps steps = new Steps.Steps();
             steps.InitBrowser();
-            steps.FindFlightRoundtripTwoAdults("Вильнюс", "Амстердам", new DateTime(2018, 4, 28), new DateTime(2018, 5, 1), 2);
+            steps.FindFlightRoundtripTwoAdults(depPoint, returnPoint, depDate, returnDate, 2);
             Assert.True(steps.HasTicketsList(true));
         }
 
@@ -27,7 +32,7 @@ namespace Aviasales_tests.Tests
         {
             Aviasales_tests.Steps.Steps steps = new Steps.Steps();
             steps.InitBrowser();
-            steps.FindFlightWithSameOriginAndDestinationPointThrowException("Вильнюс", "Вильнюс", new DateTime(2018, 4, 28), new DateTime(2018, 5, 1), 2);
+            steps.FindFlightWithSameOriginAndDestinationPointThrowException(depPoint, depPoint, depDate, returnDate, 2);
             Assert.True(steps.HasErrorMessage());
         }
 
@@ -36,7 +41,7 @@ namespace Aviasales_tests.Tests
         {
             Aviasales_tests.Steps.Steps steps = new Steps.Steps();
             steps.InitBrowser();
-            steps.FindFlightOneAdult("Вильнюс", "Амстердам", new DateTime(2018, 4, 28), 1);
+            steps.FindFlightOneAdult(depPoint, returnPoint, depDate, 1);
             Assert.True(steps.HasTicketsList(true));
         }
 
@@ -45,7 +50,7 @@ namespace Aviasales_tests.Tests
         {
             Aviasales_tests.Steps.Steps steps = new Steps.Steps();
             steps.InitBrowser();
-            steps.FindFlightRoundtripWithChildrenUnder12("Вильнюс", "Амстердам", new DateTime(2018, 4, 28), new DateTime(2018, 5, 1), 1, 1);
+            steps.FindFlightRoundtripWithChildrenUnder12(depPoint, returnPoint, depDate, returnDate, 1, 1);
             Assert.True(steps.HasTicketsList(true));
         }
 
@@ -54,7 +59,7 @@ namespace Aviasales_tests.Tests
         {
             Aviasales_tests.Steps.Steps steps = new Steps.Steps();
             steps.InitBrowser();
-            steps.FindFlightRoundtripWithChildernUnder2("Вильнюс", "Амстердам", new DateTime(2018, 4, 28), new DateTime(2018, 5, 1), 1, 1);
+            steps.FindFlightRoundtripWithChildernUnder2(depPoint, returnPoint, depDate, returnDate, 1, 1);
             Assert.True(steps.HasTicketsList(true));
         }
 
@@ -63,7 +68,7 @@ namespace Aviasales_tests.Tests
         {
             Aviasales_tests.Steps.Steps steps = new Steps.Steps();
             steps.InitBrowser();
-            steps.FindFlightRoundtripAdultsBusinessClass("Вильнюс", "Амстердам", new DateTime(2018, 4, 28), new DateTime(2018, 5, 1), 1);
+            steps.FindFlightRoundtripAdultsBusinessClass(depPoint, returnPoint, depDate, returnDate, 1);
             Assert.True(steps.HasTicketsList(true));
         }
 

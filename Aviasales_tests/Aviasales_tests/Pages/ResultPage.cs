@@ -15,6 +15,13 @@ namespace Aviasales_tests.Pages
 
         private IWebDriver driver;
 
+        [FindsBy(How = How.XPath, Using = " / html / body / div[1] / div[2] / div / div / div[2] / div[2] / div[1] / div[2] / div[6]")]
+        private IWebElement dropdownAirline;
+        [FindsBy(How = How.XPath, Using = " / html / body / div[1] / div[2] / div / div / div[2] / div[2] / div[1] / div[2] / div[6] / div / div[3] / div[1]")]
+        private IWebElement checkboxallAirline;
+        [FindsBy(How = How.XPath, Using = "/html/body/div[1]/div[2]/div/div/div[2]/div[2]/div[1]/div[2]/div[6]/div/div[3]/div[2]/div[24]")]
+        private IWebElement checkboxAirline;
+
         public ResultPage(IWebDriver driver)
         {
             this.driver = driver;
@@ -44,9 +51,9 @@ namespace Aviasales_tests.Pages
         public void FilterAirline()
         {
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-            driver.FindElement(By.XPath("/html/body/div[1]/div[2]/div/div/div[2]/div[2]/div[1]/div[2]/div[6]")).Click();
-            driver.FindElement(By.XPath("/html/body/div[1]/div[2]/div/div/div[2]/div[2]/div[1]/div[2]/div[6]/div/div[3]/div[1]")).Click();
-            driver.FindElement(By.XPath("/html/body/div[1]/div[2]/div/div/div[2]/div[2]/div[1]/div[2]/div[6]/div/div[3]/div[2]/div[24]")).Click();
+            dropdownAirline.Click();
+            checkboxallAirline.Click();
+            checkboxAirline.Click();
         }
     }
 }

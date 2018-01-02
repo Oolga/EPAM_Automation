@@ -17,7 +17,6 @@ namespace Aviasales_tests.Pages
         private IWebElement buttonFind;
         [FindsBy(How = How.XPath, Using = "/html/body/div[1]/div[2]/div/div[1]/div[2]/div/form/div[1]/div[3]/div[1]/div")]
         private IWebElement dropDownElement;
-
         [FindsBy(How = How.XPath, Using = "//input[@id='origin']")]
         private IWebElement originInput;
         [FindsBy(How = How.XPath, Using = "//input[@id='destination']")]
@@ -32,6 +31,15 @@ namespace Aviasales_tests.Pages
         private IWebElement setCountOfAdultsInput;
         [FindsBy(How = How.XPath, Using = "//div[@class='of_input_checkbox of_input_checkbox--dark of_additional__trip_class']")]
         private IWebElement tripClassSwitcherButton;
+        [FindsBy(How =How.XPath, Using = "//div[@class='of_form_part--destination is_invalid of_form_part of_autocomplete']")]
+        private IWebElement errorMessage;
+        [FindsBy(How = How.XPath, Using = "//a[@class='of_numeric_input__inc'][1]")]
+        private IWebElement inputIncAdults;
+        [FindsBy(How = How.XPath, Using = "/html/body/div[1]/div[2]/div/div/form/div[1]/div[4]/div/div[2]/div[3]/label/a[2]")]
+        private IWebElement inputIncChildrenUnder12;
+        [FindsBy(How = How.XPath, Using = "/html/body/div[1]/div[2]/div/div/form/div[1]/div[4]/div/div[2]/div[4]/label/a[2]")]
+        private IWebElement inputIncChildrenUnder2;
+        private const string ticketsListContainer = "/html/body/div[1]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[2]";
 
         private IWebDriver driver;
 
@@ -69,12 +77,13 @@ namespace Aviasales_tests.Pages
 
         public By GetTicketsListContainer()
         {
-            return By.XPath("/html/body/div[1]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[2]");
+            return By.XPath(ticketsListContainer);
         }
 
         public IEnumerable<IWebElement> GetTicketsListElement(IWebElement dynamicElement)
         {
-            return dynamicElement.FindElements(By.XPath("//div[@class='ticket product-list__ticket --openable']"));
+            var elements= dynamicElement.FindElements(By.XPath("//div[@class='ticket product-list__ticket --openable']"));
+            return elements;
         }
 
         public void FindFlightRoundtripAdultsOnlyBusinessClass(string origin, string destination, DateTime departDate, DateTime returnDate, int countOfAdults)
@@ -140,7 +149,7 @@ namespace Aviasales_tests.Pages
             SetDepartDate(departDate, returnDate);
 
             SetCountOfAdults(countOfAdults);
-            SetCountOfCheldrenUnder12(countOfChildren);
+            SetCountOfChildrenUnder12(countOfChildren);
 
             buttonFind.Click();
         }
@@ -166,7 +175,14 @@ namespace Aviasales_tests.Pages
 
         public bool HasErrorMessage()
         {
-            return null != driver.FindElement(By.XPath("//div[@class='of_form_part--destination is_invalid of_form_part of_autocomplete']"));
+            try
+            {
+                return errorMessage.Displayed;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private void SetDepartDate(DateTime before, DateTime date)
@@ -191,16 +207,16 @@ namespace Aviasales_tests.Pages
             for (int i = 1; i < count; i++)
             {
                 ofDropdownValueButton.Click();
-                driver.FindElements(By.XPath("//a[@class='of_numeric_input__inc']"))[0].Click();
+                inputIncAdults.Click();
             }
         }
 
-        private void SetCountOfCheldrenUnder12(int count)
+        private void SetCountOfChildrenUnder12(int count)
         {
             for (int i = 0; i < count; i++)
             {
                 ofDropdownValueButton.Click();
-                driver.FindElements(By.XPath("//a[@class='of_numeric_input__inc']"))[1].Click();
+                inputIncChildrenUnder12.Click();
             }
         }
 
@@ -209,7 +225,7 @@ namespace Aviasales_tests.Pages
             for (int i = 0; i < count; i++)
             {
                 ofDropdownValueButton.Click();
-                driver.FindElements(By.XPath("//a[@class='of_numeric_input__inc']"))[2].Click();
+                inputIncChildrenUnder2.Click();
             }
         }
 

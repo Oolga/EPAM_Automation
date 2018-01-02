@@ -67,6 +67,7 @@ namespace Aviasales_tests.Steps
         {
             page.OpenPage();
             page.FindFlightAdultsOnly(origin, destination, departDate, countOfAdults);
+            page.HasErrorMessage();
         }
 
         public void FindFlightRoundtripWithChildrenUnder12(string origin, string destination, DateTime departDate, DateTime returnDate, int countOfAdults, int countOfChildren)
